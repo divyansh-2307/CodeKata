@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     # initialize db with offers
     # Note: comment after initialization if the product and offer configuration are same.
-    # initialize_db()
+    initialize_db()
 
     # enter your test CART below
     cart = "AAAAA"

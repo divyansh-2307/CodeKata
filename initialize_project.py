@@ -1,5 +1,5 @@
 import os
-
+import sys
 from CodeKata.apps.checkout.checkout import Checkout
 from CodeKata.apps.products.offer_processor import initialise_offers
 from CodeKata.apps.products.product_processor import initialise_products
@@ -14,15 +14,16 @@ def initialize_db():
     product_init_resp = initialise_products()
     if not product_init_resp.get("success", False):
         print(f"Error while Initializing Products: {product_init_resp.get('error', '')} \n")
-        return
+        return dict(success=False)
     print("Products Initialization success... \n")
 
     print("Initializing offers...")
     offer_init_resp = initialise_offers()
     if not offer_init_resp.get("success", False):
         print(f"Error while Initializing Product offers: {offer_init_resp.get('error', '')} \n")
-        return
+        return dict(success=False)
     print("Product Offers Initialization success... \n")
+    return dict(success=True)
 
 
 def process_cart(cart: str):
@@ -59,7 +60,9 @@ if __name__ == "__main__":
 
     # initialize db with offers
     # Note: comment after initialization if the product and offer configuration are same.
-    initialize_db()
+    initialize_resp = initialize_db()
+    if not initialize_resp.get("success", False):
+        sys.exit()
 
     # enter your test CART below
     cart = "AAAAA"
